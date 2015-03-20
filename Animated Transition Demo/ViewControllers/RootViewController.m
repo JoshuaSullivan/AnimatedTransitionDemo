@@ -9,6 +9,7 @@
 #import "RootViewController.h"
 #import "PushTransitionAnimator.h"
 #import "PopTransitionAnimator.h"
+#import "ExtraFancyTransitionAnimator.h"
 
 static NSString * const kContainmentSegueIdentifier = @"kContainmentSegueIdentifier";
 
@@ -16,6 +17,7 @@ static NSString * const kContainmentSegueIdentifier = @"kContainmentSegueIdentif
 
 @property (strong, nonatomic) PushTransitionAnimator *pushAnimator;
 @property (strong, nonatomic) PopTransitionAnimator *popAnimator;
+@property (strong, nonatomic) ExtraFancyTransitionAnimator *fancyAnimator;
 
 @end
 
@@ -27,11 +29,7 @@ static NSString * const kContainmentSegueIdentifier = @"kContainmentSegueIdentif
     // Animators can be reused, so we'll just create them up front.
     self.pushAnimator = [PushTransitionAnimator new];
     self.popAnimator = [PopTransitionAnimator new];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.fancyAnimator = [ExtraFancyTransitionAnimator new];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -51,6 +49,7 @@ static NSString * const kContainmentSegueIdentifier = @"kContainmentSegueIdentif
 {
     // Check if this is a push or a pop and return the appropriate animator.
     if (operation == UINavigationControllerOperationPush) {
+        // You can return self.fancyAnimator here instead. WARNING: Don't try that in the simulator.
         return self.pushAnimator;
     } else if (operation == UINavigationControllerOperationPop) {
         return self.popAnimator;
